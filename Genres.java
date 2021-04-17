@@ -11,22 +11,27 @@ import java.sql.*;
  * @author mano
  */
 public class Genres {
-    public void create(int idGenre,String name)throws SQLException{
-        Connection connect = Database.getConnection();
-        try(PreparedStatement preparedStatement = connect.prepareStatement(
+    Genres(){};
+    public void create(int idGen,String name)throws SQLException{
+        Connection connection = Database.getConnection();
+        try(PreparedStatement preparedStatement = connection.prepareStatement(
                 "INSERT INTO genres(id_gen,name) values(?,?) ")){
-                prepStmt.setInt(1,idGenres);
-                prepStmt.setString(2,name);
-                 prepStmt.executeUpdate();
+                preparedStatement.setInt(1,idGen);
+                preparedStatement.setString(2,name);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+                connection.commit();
         }
-public Integer findByName(String name) throws SQLException {
-            Connection conn = Database.getConnection();
-            String sql="SELECT id FROM genres WHERE name='"+name+"'";
-            Statement statement=conn.prepareStatement(sql);
-            ResultSet resultSet=statement.executeQuery(sql);
-            if(resultSet.next()) {return resultSet.getInt(1);}
-            return null;
+       
     }
-    }
-}
+    public Integer findByName(String name) throws SQLException {
+                Connection connection = Database.getConnection();
+                String sql="SELECT id FROM genres WHERE name='"+name+"'";
+                Statement statement=connection.prepareStatement(sql);
+                ResultSet resultSet=statement.executeQuery(sql);
+                if(resultSet.next()) {return resultSet.getInt(1);}
+                return null;
+        }
+ }
+
 
